@@ -1,0 +1,131 @@
+const color = {
+  black: '#121212',
+  white: '#fafafa',
+  greyDarkest: '#333',
+  greyDarker: '#555',
+  greyDark: '#777',
+  grey: '#999',
+  greyLight: '#bbb',
+  greyLighter: '#ddd',
+  greyLightest: '#f4f4f4',
+  redDarkest: '#870000',
+  redDarker: '#a71d1d',
+  redDark: '#c62828',
+  red: '#e53935',
+  redLight: '#ef5350',
+  redLighter: '#e57373',
+  redLightest: '#ef9a9a',
+  blueDarkest: '#001f3f',
+  blueDarker: '#003366',
+  blueDark: '#004080',
+  blue: '#005cbf',
+  blueLight: '#0077e0',
+  blueLighter: '#0088ff',
+  blueLightest: '#66a3ff',
+  purpleDarkest: '#3f005c',
+  purpleDarker: '#600080',
+  purpleDark: '#8000a6',
+  purple: '#9c27b0',
+  purpleLight: '#ab47bc',
+  purpleLighter: '#ba68c8',
+  purpleLightest: '#ce93d8',
+  greenDarkest: '#004d00',
+  greenDarker: '#006600',
+  greenDark: '#008000',
+  green: '#4caf50',
+  greenLight: '#66bb6a',
+  greenLighter: '#81c784',
+  greenLightest: '#a5d6a7',
+};
+
+export const theme = {
+  text: {
+    size: {
+      sm: 12,
+      base: 16,
+      md: 20,
+      lg: 24,
+      xl: 28,
+    },
+    weight: {
+      light: '300',
+      normal: '400',
+      bold: '600',
+    },
+    spacing: {
+      tight: 0.6,
+      normal: 1,
+      wide: 1.8,
+    },
+    lineHeight: {
+      none: 1,
+      tight: 1.2,
+      normal: 1.6,
+      large: 2.2,
+    },
+    fonts: {
+      base: null,
+    },
+  },
+  color,
+  space: {
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 24,
+    xl: 32,
+  },
+  radius: {
+    xs: 4,
+    sm: 8,
+    base: 12,
+    lg: 18,
+    xl: 26,
+  },
+  opacity: {
+    none: 0,
+    low: 0.2,
+    demi: 0.4,
+    high: 0.7,
+    base: 1,
+  },
+  shadows: [
+    {
+      shadowColor: color.black,
+      shadowOffset: {
+        width: 1,
+        height: 2,
+      },
+      shadowOpacity: 0.7,
+      shadowRadius: 2,
+    },
+    {
+      shadowColor: color.black,
+      shadowOffset: {
+        width: 0,
+        height: 4,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 8,
+    },
+  ],
+  borders: [
+    {
+      borderWidth: 1,
+      borderColor: color.greyLight,
+    },
+    {
+      borderWidth: 2,
+      borderColor: color.greyDark,
+    },
+    {
+      borderWidth: 4,
+      borderColor: color.greyDarker,
+    },
+  ],
+  button: {
+    disabled: {
+      opacity: 0.6,
+    },
+  },
+};
