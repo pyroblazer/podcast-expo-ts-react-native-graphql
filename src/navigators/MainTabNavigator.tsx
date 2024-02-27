@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import ListenNowScreen from '../components/listenNow/ListenNowScreen';
 import SearchScreen from '../components/search/SearchScreen';
-import LibraryScreen from '../components/library/LibraryScreen';
+import LibraryScreen from '../components/library/LIbraryScreen';
 
 const ListenNowStack = createStackNavigator();
 
@@ -13,7 +13,7 @@ const ListenNowStackNavigator = () => {
     <ListenNowStack.Navigator>
       <ListenNowStack.Screen
         options={{
-          title: 'Listen Now!!!',
+          title: 'Listen Now',
         }}
         name="ListenNow"
         component={ListenNowScreen}
@@ -50,7 +50,7 @@ const MainTabNavigator = () => {
       <MainTab.Screen
         name="ListenNow"
         options={{
-          title: 'Listen Now?',
+          title: 'Listen Now',
         }}
         component={ListenNowStackNavigator}
       />
