@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Text } from 'react-native-design-utility';
 import { FlatList, StyleSheet, TextInput } from 'react-native';
 import { useLazyQuery } from '@apollo/react-hooks';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import FeatherIcon from '@expo/vector-icons/Feather';
 
 import { theme } from '../../constants/theme';
 import {

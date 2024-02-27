@@ -1,14 +1,17 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import {
+  createBottomTabNavigator,
+  BottomTabBar,
+} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import FeatherIcon from '@expo/vector-icons/Feather';
 
 import ListenNowScreen from '../components/listenNow/ListenNowScreen';
 import SearchScreen from '../components/search/SearchScreen';
 import LibraryScreen from '../components/library/LIbraryScreen';
-
 import PodcastDetailsScreen from '../components/podcastDetails/PodcastDetailsScreen';
-import { theme } from '../constants/theme';
+import {theme} from '../constants/theme';
+import MiniPlayer from '../components/miniPlayer/MiniPlayer';
 
 const ListenNowStack = createStackNavigator();
 
@@ -35,13 +38,13 @@ const SearchStackNavigator = () => {
         headerTintColor: theme.color.blueLight,
         headerTitleStyle: {
           color: theme.color.black,
-        }
+        },
       }}>
       <SearchStack.Screen name="Search" component={SearchScreen} />
       <SearchStack.Screen
         name="PodcastDetails"
         component={PodcastDetailsScreen}
-        options={{ headerTitle: '' }}
+        options={{headerTitle: ''}}
       />
     </SearchStack.Navigator>
   );
@@ -64,6 +67,12 @@ const MainTab = createBottomTabNavigator();
 const MainTabNavigator = () => {
   return (
     <MainTab.Navigator
+      tabBar={(tabsProps) => (
+        <>
+          <MiniPlayer />
+          <BottomTabBar {...tabsProps} />
+        </>
+      )}
       tabBarOptions={{
         activeTintColor: theme.color.blueLight,
       }}>

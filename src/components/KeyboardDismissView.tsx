@@ -1,5 +1,5 @@
 import React from 'react';
-import {Keyboard, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import {Keyboard, ScrollView, StyleSheet, Pressable} from 'react-native';
 
 interface Props {
   withScrollView?: boolean;
@@ -17,12 +17,12 @@ const KeyboardDismissView: React.FC<Props> = (props) => {
   }
 
   return (
-    <TouchableOpacity
+    <Pressable
       activeOpacity={1}
       style={s.container}
       onPress={Keyboard.dismiss}>
       {props.children}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, Text} from 'react-native-design-utility';
-import {Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {SearchQuery_search} from '../../types/graphql';
@@ -26,14 +26,14 @@ const SearchTile: React.FC<Props> = (props) => {
         <Text size="xs" color="grey">
           {props.item.artist}
         </Text>
-        <TouchableOpacity
+        <Pressable
           onPress={() =>
             navigation.navigate('PodcastDetails', {data: props.item})
           }>
           <Text size="xs" color="blueLight">
             {props.item.episodesCount} episodes
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </Box>
     </Box>
   );

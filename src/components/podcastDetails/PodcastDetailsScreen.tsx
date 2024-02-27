@@ -1,8 +1,14 @@
 import React from 'react';
 import { Box, Text } from 'react-native-design-utility';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { ActivityIndicator, FlatList, Image, StyleSheet } from 'react-native';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import {
+    ActivityIndicator,
+    FlatList,
+    Image,
+    StyleSheet,
+    Pressable,
+} from 'react-native';
+import FeatherIcon from '@expo/vector-icons/Feather';
 import { useQuery } from '@apollo/react-hooks';
 
 import { SearchStackRouteParamsList } from '../../navigators/types';
@@ -10,10 +16,12 @@ import { theme } from '../../constants/theme';
 import { FeedQuery, FeedQueryVariables } from '../../types/graphql';
 import feedQuery from '../../graphql/query/feedQuery';
 import { getWeekDay, humanDuration } from '../../lib/dateTimeHelpers';
+import { usePlayerContext } from '../../contexts/PlayerContext';
 
 type NavigationParams = RouteProp<SearchStackRouteParamsList, 'PodcastDetails'>;
 
 const PodcastDetailsScreen = () => {
+    const playerContext = usePlayerContext();
     const { data: podcastData } = useRoute<NavigationParams>().params ?? {};
 
     const { data, loading } = useQuery<FeedQuery, FeedQueryVariables>(feedQuery, {
@@ -49,13 +57,28 @@ const PodcastDetailsScreen = () => {
                             </Box>
                         </Box>
                         <Box px="sm" mb="md" dir="row" align="center">
-                            <Box mr={10}>
+                            <Pressable
+                                onPress={() => {
+                                    const el = data?.feed[0];
+
+                                    if (!el) {
+                                        return;
+                                    }
+
+                                    playerContext.play({
+                                        title: el.title,
+                                        artwork: el.image ?? podcastData.thumbnail,
+                                        id: el.linkUrl,
+                                        url: el.linkUrl,
+                                        artist: podcastData.artist,
+                                    });
+                                }}>
                                 <FeatherIcon
                                     name="play"
                                     size={30}
                                     color={theme.color.blueLight}
                                 />
-                            </Box>
+                            </Pressable>
                             <Box f={1}>
                                 <Text bold>Play</Text>
                                 <Text size="sm">{data?.feed[0].title}</Text>
