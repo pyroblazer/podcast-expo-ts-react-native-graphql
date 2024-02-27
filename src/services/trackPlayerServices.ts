@@ -12,4 +12,20 @@ export const trackPlayerServices = async function() {
   TrackPlayer.addEventListener(Event.PlaybackState, (state) => {
     console.log('Event.PlaybackState', state);
   });
-}
+
+  TrackPlayer.addEventListener(
+    Event.RemoteJumpForward,
+    async ({interval}: {interval: number}) => {
+      const position = await TrackPlayer.getPosition();
+      await TrackPlayer.seekTo(position + interval);
+    },
+  );
+
+  TrackPlayer.addEventListener(
+    Event.RemoteJumpBackward,
+    async ({interval}: {interval: number}) => {
+      const position = await TrackPlayer.getPosition();
+      await TrackPlayer.seekTo(position - interval);
+    },
+  );
+};

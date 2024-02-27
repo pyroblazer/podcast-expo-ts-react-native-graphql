@@ -8,11 +8,10 @@ import { theme } from './src/constants/theme';
 import MainStackNavigator from './src/navigators/MainStackNavigator';
 import { client } from './src/graphql/client';
 
-import TrackPlayer from '@5stones/react-native-track-player';
+import TrackPlayer, {Capability} from '@5stones/react-native-track-player';
 
 import { ActivityIndicator } from 'react-native';
 import { PlayerContextProvider } from './src/contexts/PlayerContext';
-import { trackPlayerServices } from './src/services/trackPlayerServices';
 
 const App = () => {
   const [isReady, setIsReady] = React.useState<boolean>(false);
@@ -20,7 +19,19 @@ const App = () => {
   React.useEffect(() => {
     TrackPlayer.setupPlayer().then(() => {
       console.log('player is setup');
-      TrackPlayer.registerPlaybackService(() => trackPlayerServices);
+
+      TrackPlayer.updateOptions({
+        capabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.Stop,
+          Capability.JumpForward,
+          Capability.JumpBackward,
+        ],
+        forwardJumpInterval: 30,
+        backwardJumpInterval: 30,
+      });
+
       setIsReady(true);
     });
   }, []);
