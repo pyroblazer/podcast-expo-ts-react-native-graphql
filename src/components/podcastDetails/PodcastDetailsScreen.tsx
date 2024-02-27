@@ -1,16 +1,26 @@
 import React from 'react';
 import { Box, Text } from 'react-native-design-utility';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { FlatList, Image, StyleSheet } from 'react-native';
+import { ActivityIndicator, FlatList, Image, StyleSheet } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import { useQuery } from '@apollo/react-hooks';
 
 import { SearchStackRouteParamsList } from '../../navigators/types';
 import { theme } from '../../constants/theme';
+import { FeedQuery, FeedQueryVariables } from '../../types/graphql';
+import feedQuery from '../../graphql/query/feedQuery';
+import { getWeekDay, humanDuration } from '../../lib/dateTimeHelpers';
 
 type NavigationParams = RouteProp<SearchStackRouteParamsList, 'PodcastDetails'>;
 
 const PodcastDetailsScreen = () => {
-    const { data } = useRoute<NavigationParams>().params ?? {};
+    const { data: podcastData } = useRoute<NavigationParams>().params ?? {};
+
+    const { data, loading } = useQuery<FeedQuery, FeedQueryVariables>(feedQuery, {
+        variables: {
+            feedUrl: podcastData.feedUrl,
+        },
+    });
 
     return (
         <Box f={1} bg="white">
@@ -18,17 +28,20 @@ const PodcastDetailsScreen = () => {
                 ListHeaderComponent={
                     <>
                         <Box dir="row" px="sm" mt="sm" mb="md">
-                            {data.thumbnail && (
+                            {podcastData.thumbnail && (
                                 <Box mr={10}>
-                                    <Image source={{ uri: data.thumbnail }} style={s.thumbnail} />
+                                    <Image
+                                        source={{ uri: podcastData.thumbnail }}
+                                        style={s.thumbnail}
+                                    />
                                 </Box>
                             )}
                             <Box f={1}>
                                 <Text size="lg" bold>
-                                    {data.podcastName}
+                                    {podcastData.podcastName}
                                 </Text>
                                 <Text size="xs" color="grey">
-                                    {data.artist}
+                                    {podcastData.artist}
                                 </Text>
                                 <Text color="blueLight" size="xs">
                                     Subscribed
@@ -43,9 +56,9 @@ const PodcastDetailsScreen = () => {
                                     color={theme.color.blueLight}
                                 />
                             </Box>
-                            <Box>
+                            <Box f={1}>
                                 <Text bold>Play</Text>
-                                <Text size="sm">#400 - The Last Episode</Text>
+                                <Text size="sm">{data?.feed[0].title}</Text>
                             </Box>
                         </Box>
 
@@ -59,41 +72,35 @@ const PodcastDetailsScreen = () => {
                                 Episodes
                             </Text>
                         </Box>
+
+                        {loading && (
+                            <Box h={200} center>
+                                <ActivityIndicator size="large" color={theme.color.blueLight} />
+                            </Box>
+                        )}
                     </>
                 }
-                data={[{ id: '1' }, { id: '2' }]}
+                data={data?.feed}
                 ItemSeparatorComponent={() => (
                     <Box w="100%" px="sm" my="sm">
                         <Box style={{ height: StyleSheet.hairlineWidth }} bg="greyLighter" />
                     </Box>
                 )}
-                renderItem={() => (
+                renderItem={({ item }) => (
                     <Box px="sm">
                         <Text size="xs" color="grey">
-                            Lorem Ipsum
+                            {getWeekDay(new Date(item.pubDate)).toUpperCase()}
                         </Text>
-                        <Text bold>#1 - Lorem Ipsum Dolor</Text>
+                        <Text bold>{item.title}</Text>
                         <Text size="sm" color="grey" numberOfLines={2}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Proin egestas nisl risus, at faucibus diam pretium eget.
-                            Etiam vel nisi est. Pellentesque in ante venenatis, condimentum tellus id,
-                            scelerisque tortor. Nunc scelerisque dolor leo, tincidunt consequat eros
-                            fringilla a. Fusce eleifend arcu id urna viverra, nec congue nunc consequat.
-                            Integer ac sagittis turpis. Maecenas dictum felis orci, sit amet pellentesque
-                            est facilisis quis. Aliquam pulvinar dui non ligula tincidunt, quis
-                            sollicitudin mauris vehicula. In nisl odio, fringilla vel hendrerit at,
-                            elementum quis nisl. Nunc elementum, nunc ut volutpat dapibus, orci enim
-                            commodo nunc, vitae hendrerit mi lorem et nulla. Class aptent taciti sociosqu
-                            ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent
-                            cursus finibus magna ac imperdiet. Interdum et malesuada fames ac ante ipsum
-                            primis in faucibus. Duis nec lectus mauris.
+                            {item.description}
                         </Text>
                         <Text size="sm" color="grey">
-                            3hrs. 13min
+                            {humanDuration(item.duration)}
                         </Text>
                     </Box>
                 )}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.linkUrl}
             />
         </Box>
     );
