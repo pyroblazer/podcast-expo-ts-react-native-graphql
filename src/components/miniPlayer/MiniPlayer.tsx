@@ -15,52 +15,44 @@ const MiniPlayer = () => {
 
   return (
     <Box
-      h={75}
-      bg="white"
-      px="sm"
-      style={{borderTopWidth: 1, borderTopColor: theme.color.greyLightest}}>
-      <Box f={1} dir="row" align="center" justify="between">
-        <Box
-          h={50}
-          w={50}
-          bg="blueLight"
-          radius={10}
-          mr={10}
-          style={{overflow: 'hidden'}}>
-          <Image
-            source={{uri: playerContext.currentTrack.artwork}}
-            style={{flex: 1}}
-          />
-        </Box>
-        <Box f={1} mr={20}>
-          <Text numberOfLines={1}>{playerContext.currentTrack.title}</Text>
-        </Box>
-        <Box mr={10}>
-          {playerContext.isPaused && (
-            <Pressable onPress={() => playerContext.play()}>
-              <Icon name="play" size={30} />
-            </Pressable>
-          )}
-
-          {playerContext.isPlaying && (
-            <Pressable onPress={playerContext.pause}>
-              <Icon name="pause" size={30} />
-            </Pressable>
-          )}
-
-          {playerContext.isStopped && (
-            <Pressable onPress={() => null}>
-              <Icon name="square" size={30} />
-            </Pressable>
-          )}
-        </Box>
-        <Box>
-          <Pressable onPress={() => playerContext.seekTo()}>
-            <Icon name="rotate-cw" size={30} />
+    h={75}
+    bg="white"
+    px="sm"
+    style={{borderTopWidth: 1, borderTopColor: theme.color.greyLightest}}>
+    <Box f={1} dir="row" align="center" justify="between">
+      <Box
+        h={50}
+        w={50}
+        bg="blueLight"
+        radius={10}
+        mr={10}
+        style={{overflow: 'hidden'}}>
+        <Image
+          source={{uri: playerContext.currentTrack.artwork}}
+          style={{flex: 1}}
+        />
+      </Box>
+      <Box f={1} mr={20}>
+        <Text numberOfLines={1}>{playerContext.currentTrack.title}</Text>
+      </Box>
+      <Box mr={10}>
+        {playerContext.isPaused ? (
+          <Pressable onPress={() => playerContext.play()}>
+            <Icon name="play" size={30} />
           </Pressable>
-        </Box>
+        ) : (
+          <Pressable onPress={playerContext.pause}>
+            <Icon name="pause" size={30} />
+          </Pressable>
+        )}
+      </Box>
+      <Box>
+        <Pressable onPress={() => playerContext.seekTo()}>
+          <Icon name="rotate-cw" size={30} />
+        </Pressable>
       </Box>
     </Box>
+  </Box>
   );
 };
 

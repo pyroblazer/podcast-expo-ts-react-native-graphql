@@ -3,15 +3,16 @@ import {
   createBottomTabNavigator,
   BottomTabBar,
 } from '@react-navigation/bottom-tabs';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import FeatherIcon from '@expo/vector-icons/Feather';
 
 import ListenNowScreen from '../components/listenNow/ListenNowScreen';
 import SearchScreen from '../components/search/SearchScreen';
 import LibraryScreen from '../components/library/LIbraryScreen';
 import PodcastDetailsScreen from '../components/podcastDetails/PodcastDetailsScreen';
-import {theme} from '../constants/theme';
+import { theme } from '../constants/theme';
 import MiniPlayer from '../components/miniPlayer/MiniPlayer';
+import EpisodeDetailsScreen from '../components/episodeDetails/EpisodeDetailsScreen';
 
 const ListenNowStack = createStackNavigator();
 
@@ -29,6 +30,23 @@ const ListenNowStackNavigator = () => {
   );
 };
 
+const PodcastStack = createStackNavigator();
+
+const PodcastStackNavigator = () => {
+  return (
+    <PodcastStack.Navigator>
+      <PodcastStack.Screen
+        name="PodcastDetails"
+        component={PodcastDetailsScreen}
+      />
+      <PodcastStack.Screen
+        name="EpisodeDetails"
+        component={EpisodeDetailsScreen}
+      />
+    </PodcastStack.Navigator>
+  );
+};
+
 const SearchStack = createStackNavigator();
 
 const SearchStackNavigator = () => {
@@ -43,8 +61,8 @@ const SearchStackNavigator = () => {
       <SearchStack.Screen name="Search" component={SearchScreen} />
       <SearchStack.Screen
         name="PodcastDetails"
-        component={PodcastDetailsScreen}
-        options={{headerTitle: ''}}
+        component={PodcastStackNavigator}
+        options={{ headerTitle: '', headerBackTitle: 'Back' }}
       />
     </SearchStack.Navigator>
   );

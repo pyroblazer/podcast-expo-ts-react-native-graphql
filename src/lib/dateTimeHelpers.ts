@@ -31,7 +31,24 @@ export const getWeekDay = (date: Date): WeekDayEnum => {
 };
 
 export const humanDuration = (duration: string): string => {
-  const [h, m] = duration.split(':');
+  console.log("Start HumanDuration", duration);
+  const durationSplit = duration.split(':');
+
+  if (durationSplit.length === 2) {
+    const [m] = durationSplit;
+    return `${Number(m)}min`;
+  }
+
+  const [h, m] = durationSplit;
+
+  if (m == undefined) {
+    const durationOld = duration.slice(0, -2)
+    return `${durationOld}min`
+  }
+
+  if (h === '00') {
+    return `${Number(m)}min`;
+  }
 
   return `${Number(h)}hrs. ${m}min`;
 };
