@@ -8,7 +8,7 @@ import FeatherIcon from '@expo/vector-icons/Feather';
 
 import ListenNowScreen from '../components/listenNow/ListenNowScreen';
 import SearchScreen from '../components/search/SearchScreen';
-import LibraryScreen from '../components/library/LIbraryScreen';
+import LibraryScreen from '../components/library/LibraryScreen';
 import PodcastDetailsScreen from '../components/podcastDetails/PodcastDetailsScreen';
 import { theme } from '../constants/theme';
 import MiniPlayer from '../components/miniPlayer/MiniPlayer';
@@ -57,6 +57,7 @@ const SearchStackNavigator = () => {
         headerTitleStyle: {
           color: theme.color.black,
         },
+        headerShown:false
       }}>
       <SearchStack.Screen name="Search" component={SearchScreen} />
       <SearchStack.Screen
@@ -91,8 +92,8 @@ const MainTabNavigator = () => {
           <BottomTabBar {...tabsProps} />
         </>
       )}
-      tabBarOptions={{
-        activeTintColor: theme.color.blueLight,
+      screenOptions={{
+        headerShown:false
       }}>
       <MainTab.Screen
         name="ListenNow"

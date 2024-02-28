@@ -5,6 +5,6 @@ import { trackPlayerServices } from './src/services/trackPlayerServices';
 import App from './App';
 
 registerRootComponent(App);
-TrackPlayer.registerPlaybackService(() =>
-  trackPlayerServices
-);
+// TrackPlayer.registerPlaybackService(() =>
+//   trackPlayerServices
+// );

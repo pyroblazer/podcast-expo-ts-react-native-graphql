@@ -12,11 +12,15 @@ import TrackPlayer, {Capability} from '@5stones/react-native-track-player';
 
 import { ActivityIndicator } from 'react-native';
 import { PlayerContextProvider } from './src/contexts/PlayerContext';
+import { trackPlayerServices } from './src/services/trackPlayerServices';
 
 const App = () => {
   const [isReady, setIsReady] = React.useState<boolean>(false);
 
   React.useEffect(() => {
+    TrackPlayer.registerPlaybackService(() =>
+      trackPlayerServices
+    );
     TrackPlayer.setupPlayer().then(() => {
       console.log('player is setup');
 
